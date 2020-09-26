@@ -27,7 +27,7 @@ export const API_ENDPOINT_AUDITLOGGING = API_ENDPOINT + '/audit';
 export const API_ENDPOINT_AUDITLOGGING_UPDATE = API_ENDPOINT_AUDITLOGGING + '/config';
 export const API_ENDPOINT_PERMISSIONS_INFO = API_PREFIX + '/restapiinfo';
 
-export const CLUSTER_PERMISSIONS = [
+export const CLUSTER_PERMISSIONS: string[] = [
   'cluster:admin/ingest/pipeline/delete',
   'cluster:admin/ingest/pipeline/get',
   'cluster:admin/ingest/pipeline/put',
@@ -67,6 +67,12 @@ export const CLUSTER_PERMISSIONS = [
   'cluster:monitor/task/get',
   'cluster:monitor/tasks/list',
 ];
+
+export function addClusterPermissions(clusterPermissionsToAdd: string[]) {
+  if (clusterPermissionsToAdd) {
+    CLUSTER_PERMISSIONS.push(...clusterPermissionsToAdd);
+  }
+}
 
 export const INDEX_PERMISSIONS = [
   'indices:admin/aliases',
@@ -132,6 +138,12 @@ export const INDEX_PERMISSIONS = [
   'indices:monitor/stats',
   'indices:monitor/upgrade',
 ];
+
+export function addIndexPermissions(indexPermissionsToAdd: string[]) {
+  if (indexPermissionsToAdd) {
+    INDEX_PERMISSIONS.push(...indexPermissionsToAdd);
+  }
+}
 
 export const TENANT_READ_PERMISSION = 'kibana_all_read';
 export const TENANT_WRITE_PERMISSION = 'kibana_all_write';

@@ -56,4 +56,10 @@ export interface ClientConfigType {
   auth: {
     type: string;
   };
+  clusterPermissions: {
+    add: string[];
+  };
+  indexPermissions: {
+    add: string[];
+  };
 }

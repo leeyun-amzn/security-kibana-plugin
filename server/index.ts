@@ -23,6 +23,12 @@ export const configSchema = schema.object({
   readonly_mode: schema.object({
     roles: schema.arrayOf(schema.string(), { defaultValue: [] }),
   }),
+  clusterPermissions: schema.object({
+    add: schema.arrayOf(schema.string(), { defaultValue: [] }),
+  }),
+  indexPermissions: schema.object({
+    add: schema.arrayOf(schema.string(), { defaultValue: [] }),
+  }),
   cookie: schema.object({
     secure: schema.boolean({ defaultValue: true }),
     name: schema.string({ defaultValue: 'security_authentication' }),
@@ -192,6 +198,8 @@ export const config: PluginConfigDescriptor<SecurityPluginConfigType> = {
     ui: true,
     multitenancy: true,
     readonly_mode: true,
+    clusterPermissions: true,
+    indexPermissions: true,
   },
   schema: configSchema,
   deprecations: ({ rename, unused }) => [

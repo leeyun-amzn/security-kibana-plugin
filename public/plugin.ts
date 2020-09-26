@@ -16,21 +16,25 @@
 import { BehaviorSubject } from 'rxjs';
 import {
   AppMountParameters,
+  AppStatus,
+  AppUpdater,
   CoreSetup,
   CoreStart,
   Plugin,
   PluginInitializerContext,
-  AppUpdater,
-  AppStatus,
 } from '../../../src/core/public';
 import {
-  OpendistroSecurityPluginSetup,
-  OpendistroSecurityPluginStart,
   AppPluginStartDependencies,
   ClientConfigType,
+  OpendistroSecurityPluginSetup,
+  OpendistroSecurityPluginStart,
 } from './types';
 import { LOGIN_PAGE_URI, PLUGIN_NAME, SELECT_TENANT_PAGE_URI } from '../common';
-import { API_ENDPOINT_PERMISSIONS_INFO } from './apps/configuration/constants';
+import {
+  addClusterPermissions,
+  addIndexPermissions,
+  API_ENDPOINT_PERMISSIONS_INFO,
+} from './apps/configuration/constants';
 import { setupTopNavButton } from './apps/account/account-app';
 import { fetchAccountInfoSafe } from './apps/account/utils';
 
@@ -70,6 +74,10 @@ export class OpendistroSecurityPlugin
         mount: async (params: AppMountParameters) => {
           const { renderApp } = await import('./apps/configuration/configuration-app');
           const [coreStart, depsStart] = await core.getStartServices();
+
+          addClusterPermissions(config.clusterPermissions.add);
+          addIndexPermissions(config.indexPermissions.add);
+
           return renderApp(coreStart, depsStart as AppPluginStartDependencies, params, config);
         },
       });
