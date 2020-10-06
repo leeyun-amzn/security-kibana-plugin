@@ -13,7 +13,10 @@
  *   permissions and limitations under the License.
  */
 
+
 import { API_PREFIX } from '../../../common';
+
+import { i18n } from '@kbn/i18n';
 
 export const API_ENDPOINT = API_PREFIX + '/configuration';
 export const API_ENDPOINT_ROLES = API_ENDPOINT + '/roles';
@@ -152,25 +155,36 @@ export const LEARN_MORE = 'Learn more';
 
 export const RoleViewTenantInvalidText = 'N/A';
 
-// External Links
-export enum DocLinks {
-  BackendConfigurationDoc = 'https://opendistro.github.io/for-elasticsearch-docs/docs/security/configuration/configuration/',
-  BackendConfigurationAuthenticationDoc = 'https://opendistro.github.io/for-elasticsearch-docs/docs/security/configuration/configuration/#authentication',
-  BackendConfigurationAuthorizationDoc = 'https://opendistro.github.io/for-elasticsearch-docs/docs/security/configuration/configuration/#authorization',
-  AuthenticationFlowDoc = 'https://opendistro.github.io/for-elasticsearch-docs/docs/security/configuration/concepts/',
-  UsersAndRolesDoc = 'https://opendistro.github.io/for-elasticsearch-docs/docs/security/access-control/users-roles/',
-  CreateRolesDoc = 'https://opendistro.github.io/for-elasticsearch-docs/docs/security/access-control/users-roles/#create-roles',
-  MapUsersToRolesDoc = 'https://opendistro.github.io/for-elasticsearch-docs/docs/security/access-control/users-roles/#map-users-to-roles',
-  CreateUsersDoc = 'https://opendistro.github.io/for-elasticsearch-docs/docs/security/access-control/users-roles/#create-users',
-  AuditLogsDoc = 'https://opendistro.github.io/for-elasticsearch-docs/docs/security/audit-logs/',
-  AuditLogsStorageDoc = 'https://opendistro.github.io/for-elasticsearch-docs/docs/security/audit-logs/storage-types/',
-  PermissionsDoc = 'https://opendistro.github.io/for-elasticsearch-docs/docs/security/access-control/default-action-groups/',
-  ClusterPermissionsDoc = 'https://opendistro.github.io/for-elasticsearch-docs/docs/security/access-control/default-action-groups/#cluster-level',
-  IndexPermissionsDoc = 'https://opendistro.github.io/for-elasticsearch-docs/docs/security/access-control/default-action-groups/#index-level',
-  DocumentLevelSecurityDoc = 'https://opendistro.github.io/for-elasticsearch-docs/docs/security/access-control/document-level-security/',
-  TenantPermissionsDoc = 'https://opendistro.github.io/for-elasticsearch-docs/docs/security/access-control/multi-tenancy/',
-  AttributeBasedSecurityDoc = 'https://opendistro.github.io/for-elasticsearch-docs/docs/security/access-control/document-level-security/#attribute-based-security',
+function getLink(){
+  const translatedLink = i18n.translate('audit.logs.docLink', {
+    defaultMessage: 'https://opendistro.github.io/for-elasticsearch-docs/docs/security/audit-logs/',
+  });
+
+  console.log('getLink is ' + translatedLink);
+
+  return translatedLink;
 }
+
+// External Links
+export const DocLinks = {
+  BackendConfigurationDoc: 'https://opendistro.github.io/for-elasticsearch-docs/docs/security/configuration/configuration/',
+  BackendConfigurationAuthenticationDoc: 'https://opendistro.github.io/for-elasticsearch-docs/docs/security/configuration/configuration/#authentication',
+  BackendConfigurationAuthorizationDoc: 'https://opendistro.github.io/for-elasticsearch-docs/docs/security/configuration/configuration/#authorization',
+  AuthenticationFlowDoc: 'https://opendistro.github.io/for-elasticsearch-docs/docs/security/configuration/concepts/',
+  UsersAndRolesDoc: 'https://opendistro.github.io/for-elasticsearch-docs/docs/security/access-control/users-roles/',
+  CreateRolesDoc: 'https://opendistro.github.io/for-elasticsearch-docs/docs/security/access-control/users-roles/#create-roles',
+  MapUsersToRolesDoc: 'https://opendistro.github.io/for-elasticsearch-docs/docs/security/access-control/users-roles/#map-users-to-roles',
+  CreateUsersDoc: 'https://opendistro.github.io/for-elasticsearch-docs/docs/security/access-control/users-roles/#create-users',
+  // AuditLogsDoc = 'https://opendistro.github.io/for-elasticsearch-docs/docs/security/audit-logs/',
+  AuditLogsDoc: getLink(),
+  AuditLogsStorageDoc: 'https://opendistro.github.io/for-elasticsearch-docs/docs/security/audit-logs/storage-types/',
+  PermissionsDoc: 'https://opendistro.github.io/for-elasticsearch-docs/docs/security/access-control/default-action-groups/',
+  ClusterPermissionsDoc: 'https://opendistro.github.io/for-elasticsearch-docs/docs/security/access-control/default-action-groups/#cluster-level',
+  IndexPermissionsDoc: 'https://opendistro.github.io/for-elasticsearch-docs/docs/security/access-control/default-action-groups/#index-level',
+  DocumentLevelSecurityDoc: 'https://opendistro.github.io/for-elasticsearch-docs/docs/security/access-control/document-level-security/',
+  TenantPermissionsDoc: 'https://opendistro.github.io/for-elasticsearch-docs/docs/security/access-control/multi-tenancy/',
+  AttributeBasedSecurityDoc: 'https://opendistro.github.io/for-elasticsearch-docs/docs/security/access-control/document-level-security/#attribute-based-security',
+};
 
 export enum ToolTipContent {
   DocumentLevelSecurity = 'Document-level security lets you restrict a role to a subset of documents in an index.',

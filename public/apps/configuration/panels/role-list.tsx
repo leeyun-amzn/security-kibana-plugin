@@ -53,6 +53,10 @@ import { showTableStatusMessage } from '../utils/loading-spinner-utils';
 import { useDeleteConfirmState } from '../utils/delete-confirm-modal-utils';
 import { useContextMenuState } from '../utils/context-menu';
 import { DocLinks } from '../constants';
+import { FormattedMessage } from '@kbn/i18n/react';
+
+import { i18n } from '@kbn/i18n';
+
 
 const columns: Array<EuiBasicTableColumn<RoleListing>> = [
   {
@@ -263,7 +267,7 @@ export function RoleList(props: AppDependencies) {
               Roles are the core way of controlling access to your cluster. Roles contain any
               combination of cluster-wide permission, index-specific permissions, document- and
               field-level security, and tenants. Then you map users to these roles so that users
-              gain those permissions. <ExternalLink href={DocLinks.UsersAndRolesDoc} />
+              gain those permissions. <ExternalLink href={DocLinks.UsersAndRolesDoc}/>
             </EuiText>
           </EuiPageContentHeaderSection>
           <EuiPageContentHeaderSection>
@@ -278,6 +282,11 @@ export function RoleList(props: AppDependencies) {
           </EuiPageContentHeaderSection>
         </EuiPageContentHeader>
         <EuiPageBody>
+          
+          {i18n.translate('audit.logs.test.message', {
+            defaultMessage: 'ODFE message',
+          })}
+
           <EuiInMemoryTable
             tableLayout={'auto'}
             loading={roleData === [] && !errorFlag}
@@ -285,7 +294,7 @@ export function RoleList(props: AppDependencies) {
             items={roleData}
             itemId={'roleName'}
             pagination={true}
-            selection={{ onSelectionChange: setSelection }}
+            selection={{onSelectionChange: setSelection}}
             sorting={true}
             search={searchOptions}
             error={errorFlag ? 'Load data failed, please check console log for more detail.' : ''}
