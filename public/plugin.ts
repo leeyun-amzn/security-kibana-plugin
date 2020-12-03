@@ -50,6 +50,8 @@ import {
   OpendistroSecurityPluginSetup,
   OpendistroSecurityPluginStart,
 } from './types';
+import { AppSetupUIPluginDependencies } from "./plugin-dependency";
+import { RegistryIndexManagementProvider } from "ui/registry/index_management";
 
 async function hasApiPermission(core: CoreSetup): Promise<boolean | undefined> {
   try {
@@ -69,9 +71,12 @@ const APP_ID_DASHBOARDS = 'dashboards';
 export class OpendistroSecurityPlugin
   implements Plugin<OpendistroSecurityPluginSetup, OpendistroSecurityPluginStart> {
   // @ts-ignore : initializerContext not used
+
   constructor(private readonly initializerContext: PluginInitializerContext) {}
 
-  public async setup(core: CoreSetup): Promise<OpendistroSecurityPluginSetup> {
+  public async setup(
+    core: CoreSetup,
+    {devTools}: AppSetupUIPluginDependencies): Promise<OpendistroSecurityPluginSetup> {
     const apiPermission = await hasApiPermission(core);
 
     const config = this.initializerContext.config.get<ClientConfigType>();
@@ -93,7 +98,6 @@ export class OpendistroSecurityPlugin
           // merge Kibana yml configuration
           includeClusterPermissions(config.clusterPermissions.include);
           includeIndexPermissions(config.indexPermissions.include);
-
           excludeFromDisabledTransportCategories(config.disabledTransportCategories.exclude);
           excludeFromDisabledRestCategories(config.disabledRestCategories.exclude);
 
@@ -154,8 +158,33 @@ export class OpendistroSecurityPlugin
       })
     );
 
+    devTools.register({
+      id: 'security-poc',
+      order: 2,
+      title: 'Security POC',
+      enableRouting: true,
+      mount: async (params: AppMountParameters) => {
+        console.log('enter mount');
+
+        const { renderApp } = await import('./apps/configuration/configuration-app');
+        const [coreStart, depsStart] = await core.getStartServices();
+
+        // merge Kibana yml configuration
+        includeClusterPermissions(config.clusterPermissions.include);
+        includeIndexPermissions(config.indexPermissions.include);
+
+        excludeFromDisabledTransportCategories(config.disabledTransportCategories.exclude);
+        excludeFromDisabledRestCategories(config.disabledRestCategories.exclude);
+
+        params.appBasePath = '/security-poc';
+
+        return renderApp(coreStart, depsStart as AppPluginStartDependencies, params, config);
+      },
+    });
+
     // Return methods that should be available to other plugins
-    return {};
+    return {    };
+    // return {    registerLegacyAPI: (legacyAPI) => (this.legacyAPI = legacyAPI)};
   }
 
   public start(core: CoreStart): OpendistroSecurityPluginStart {

@@ -3,7 +3,7 @@
   "version": "1.11.0",
   "kibanaVersion": "kibana",
   "configPath": ["opendistro_security"],
-  "requiredPlugins": ["navigation"],
+  "requiredPlugins": ["navigation", "devTools"],
   "server": true,
   "ui": true
 }

@@ -133,14 +133,18 @@ export function AppRouter(props: AppDependencies) {
   return (
     <Router basename={props.params.appBasePath}>
       <EuiPage>
-        {allNavPanelUrls.map((route) => (
-          // Create different routes to update the 'selected' nav item .
-          <Route key={route} path={route} exact>
-            <EuiPageSideBar>
-              <NavPanel items={ROUTE_LIST} />
-            </EuiPageSideBar>
-          </Route>
-        ))}
+        {allNavPanelUrls.map((route) =>
+            // Create different routes to update the 'selected' nav item .
+          {
+            return (
+              <Route key={route} path={route} exact>
+                <EuiPageSideBar>
+                  <NavPanel items={ROUTE_LIST}/>
+                </EuiPageSideBar>
+              </Route>
+            );
+          }
+        )}
         <EuiPageBody>
           <Switch>
             <Route
